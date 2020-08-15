@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.synear.file.uploadfile.dao.UserFileDao">
+
+    <select id="findByUserId"  resultType="UserFile">
+        select  id,oldFileName,newFileName,ext,path,size,type,isImg,downCounts,uploadTime
+         from t_files
+        where  userId = #{id}
+    </select>
+
+    <select id="findById" resultType="UserFile">
+        select  id,oldFileName,newFileName,ext,path,size,type,isImg,downCounts,uploadTime
+         from t_files
+         where id = #{id}
+    </select>
+
+    <insert id="save" parameterType="UserFile" useGeneratedKeys="true" keyProperty="id">
+        insert into t_files
+        values (#{id},#{oldFileName},#{newFileName},
+                #{ext},#{path},#{size},#{type},
+                #{isImg},#{downCounts},#{uploadTime},#{userId})
+    </insert>
+
+    <update id="updateDownCounts" parameterType="UserFile">
+        update t_files set downCounts = #{downCounts} where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from t_files where id = #{id};
+    </delete>
+</mapper>
